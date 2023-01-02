@@ -1,0 +1,29 @@
+package com.example.inventoryservice.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.example.inventoryservice.model.Inventory;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.example.inventoryservice.repository.InventoryRepository;
+
+@Service
+public class InventoryService {
+
+	@Autowired
+	private InventoryRepository inventoryRepository;
+	
+	@Transactional(readOnly = true)
+	public boolean isInStock(String code) {
+//		List<Inventory> inventory= inventoryRepository.finbByCode(code);
+//		if(inventory.isEmpty()) {
+//			return false;
+//		}
+//		else {
+//			return true;
+//		}
+		return true;
+	}
+}

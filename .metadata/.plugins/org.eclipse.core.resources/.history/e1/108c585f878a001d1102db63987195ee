@@ -1,0 +1,83 @@
+package com.product.product.service;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoOperations;
+import org.springframework.data.mongodb.core.query.Update;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import com.product.product.dto.ProductRequest;
+import com.product.product.dto.ProductResponse;
+import com.product.product.model.DatabaseSequence;
+import com.product.product.model.Product;
+import com.product.product.repository.ProductRepository;
+
+import lombok.extern.slf4j.Slf4j;
+
+import static org.springframework.data.mongodb.core.query.Criteria.where;
+import static org.springframework.data.mongodb.core.FindAndModifyOptions.options;
+import static org.springframework.data.mongodb.core.query.Query.query;
+
+@Service
+@Slf4j
+public class ProductServiceImpl implements ProductService{
+@Autowired
+private ProductRepository productRepostory;
+
+@Autowired
+private  MongoOperations mongoOperations;
+
+@Autowired
+public ProductServiceImpl(MongoOperations mongoOperations) {
+    this.mongoOperations = mongoOperations;
+}
+
+public  String  generateSequence(String seqName) {
+    DatabaseSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
+            new Update().inc("seq",1), options().returnNew(true).upsert(true),
+            DatabaseSequence.class);
+    return !Objects.isNull(counter) ? String.valueOf(counter.getSeq()) : "1";
+
+}
+
+
+private ProductResponse mapToProductResponse(Product product) {
+	return ProductResponse.builder()
+			.id(product.getId())
+			.name(product.getName())
+			.description(product.getDescription())
+			.price(product.getPrice())
+			.build();
+}
+
+
+@Override
+public List<ProductResponse> getAllProducts() {
+	List<Product> pruducts=productRepostory.findAll();
+	return pruducts.stream().map(this::mapToProductResponse).toList();
+	
+}
+
+@Override
+public void createProduct(ProductRequest productRequest) {
+	try {
+		Product product=Product.builder()
+				.id(generateSequence(Product.SEQUENCE_NAME))
+				.name(productRequest.getName())
+				.description(productRequest.getDescription())
+				.price(productRequest.getPrice())
+				.build();
+		productRepostory.save(product);
+		log.info("Product {} is saved. ",product.getId());
+		
+	  } catch (Exception e) {
+	    	 System.out.println(e);
+
+	  }
+}
+}
