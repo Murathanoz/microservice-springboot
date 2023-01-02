@@ -1,10 +1,14 @@
 package com.example.inventoryservice.contoller;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.inventoryservice.dto.InventoryResponse;
 import com.example.inventoryservice.service.*;
 
 @Controller
@@ -14,8 +18,8 @@ public class InventoryController {
 	@Autowired
 	private InventoryService inventoryService;
 	
-	@GetMapping("/{code}")
-	public boolean isInStock(@PathVariable("code") String code) {
+	@GetMapping()
+	public List<InventoryResponse> isInStock(@RequestParam List<String> code) {
 		return inventoryService.isInStock(code);
 	}
 	

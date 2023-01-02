@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.example.inventoryservice.dto.InventoryResponse;
 import com.example.inventoryservice.model.Inventory;
 import com.example.inventoryservice.repository.InventoryRepository;
 
@@ -16,14 +17,17 @@ public class InventoryService {
 	private InventoryRepository inventoryRepository;
 	
 	@Transactional(readOnly = true)
-	public boolean isInStock(String code) {
-//		List<Inventory> inventory= inventoryRepository.finbByCode(code);
-//		if(inventory.isEmpty()) {
-//			return false;
-//		}
-//		else {
-//			return true;
-//		}
-		return true;
+	public List<InventoryResponse> isInStock(List<String> code) {
+		return  inventoryRepository.finbByCodeIn(code).stream()
+				.map(inventory->
+				
+					InventoryResponse.builder()
+						.code(inventory.getCode())
+						.isInStock(inventory.getQuantity()>0)
+						.build()
+				)
+				.toList();
+		
+
 	}
 }

@@ -6,10 +6,12 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import com.example.inventoryservice.dto.InventoryResponse;
 import com.example.inventoryservice.model.Inventory;
 @Repository
 public interface InventoryRepository extends JpaRepository<Inventory, Long>{
 
-	//List<Inventory> finbByCode(String code);
+	List<Inventory> finbByCodeIn(List<String> code);
+
 
 }
