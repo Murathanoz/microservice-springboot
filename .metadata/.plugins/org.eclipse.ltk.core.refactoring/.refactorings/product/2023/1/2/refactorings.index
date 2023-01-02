@@ -1,2 +1,8 @@
 1672645631017	Delete element
 1672647541536	Delete element
+1672666734838	Rename package 'java.com.product.product'
+1672666740923	Rename package 'java.com.product.product.controller'
+1672666746704	Rename package 'java.com.product.product.dto'
+1672666752881	Rename package 'java.com.product.product.model'
+1672666758689	Rename package 'java.com.product.product.repository'
+1672666764256	Rename package 'java.com.product.product.service'

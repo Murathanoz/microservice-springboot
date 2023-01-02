@@ -6,3 +6,8 @@
 1672647266745	Delete element
 1672647271875	Delete element
 1672655201409	Delete element
+1672666605376	Rename package 'java.com.example.inventoryservice'
+1672666614303	Rename package 'java.com.example.inventoryservice.contoller'
+1672666621117	Rename package 'java.com.example.inventoryservice.model'
+1672666628705	Rename package 'java.com.example.inventoryservice.repository'
+1672666636090	Rename package 'java.com.example.inventoryservice.service'

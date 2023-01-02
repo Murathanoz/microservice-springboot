@@ -1,0 +1,20 @@
+package com.product.product.dto;
+
+import java.math.BigDecimal;
+
+import java.com.product.product.model.Product;
+import java.com.product.product.model.Product.ProductBuilder;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+public class ProductRequest {
+	 private String name;
+	  private String description;
+	  private BigDecimal price;
+}

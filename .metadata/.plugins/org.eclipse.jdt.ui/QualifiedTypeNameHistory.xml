@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.order.orderservicerepository.OrderRepository"/>
+    <fullyQualifiedTypeName name="com.order.orderservicerepository.OrderRepository"/>
+    <fullyQualifiedTypeName name="java.com.example.inventoryservice.model.Inventory"/>
+    <fullyQualifiedTypeName name="com.example.inventoryservice.repository.InventoryRepository"/>
+    <fullyQualifiedTypeName name="java.com.product.product.dto.ProductResponse"/>
+    <fullyQualifiedTypeName name="java.com.product.product.model.Product"/>
+    <fullyQualifiedTypeName name="java.com.product.product.dto.ProductRequest"/>
+    <fullyQualifiedTypeName name="java.com.product.product.model.DatabaseSequence"/>
 </qualifiedTypeNameHistroy>

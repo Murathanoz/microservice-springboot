@@ -1,0 +1,11 @@
+#Mon Jan 02 14:41:04 TRT 2023
+ct=jbt
+a=finishWizard
+c=0
+s=1
+d=1672659664567
+v=2.2.4
+vl=How many times the 'Finish' button pressed during the day
+cmp=usage
+cl=org.eclipse.equinox.internal.p2.ui.dialogs.InstallWizard
+l=Wizard class name
