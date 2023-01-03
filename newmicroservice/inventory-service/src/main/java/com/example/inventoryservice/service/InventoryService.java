@@ -12,22 +12,24 @@ import com.example.inventoryservice.repository.InventoryRepository;
 
 @Service
 public class InventoryService {
-
-	@Autowired
 	private InventoryRepository inventoryRepository;
-	
+
+	public InventoryService(InventoryRepository inventoryRepository) {
+		super();
+		this.inventoryRepository = inventoryRepository;
+	}
+
+		
 	@Transactional(readOnly = true)
 	public List<InventoryResponse> isInStock(List<String> code) {
-		return  inventoryRepository.finbByCodeIn(code).stream()
-				.map(inventory->
-				
+		return  inventoryRepository.findByCodeIn(code).stream()
+				.map(inventory->				
 					InventoryResponse.builder()
 						.code(inventory.getCode())
 						.isInStock(inventory.getQuantity()>0)
 						.build()
 				)
-				.toList();
-		
+				.toList();		
 
 	}
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import com.order.orderservice.dto.InventoryResponse;
 import com.order.orderservice.dto.OrderLineItemsDto;
 import com.order.orderservice.dto.OrderRequest;
 import com.order.orderservice.model.Order;
@@ -16,7 +17,8 @@ import com.order.orderservicerepository.OrderRepository;
 
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-
+import java.util.*;
+import java.util.stream.*;
 @Service
 @Transactional
 //@RequiredArgsConstructor
@@ -47,18 +49,21 @@ public class OrderServiceImpl implements OrderService{
 			.map(this::mapToDto)
 			.toList();
 			
-			 order.setOrderLineItems(orderLineItems);
+			 order.setOrderLineItemsList(orderLineItems);
 			 
-			 List<String> codes=order.getOrderLineItems().stream()
-			 .map(OrderLineItems::getCode()).toList();
+			 List<String> codes=order.getOrderLineItemsList().stream()
+			 .map(orderLine->((OrderLineItemsDto) orderRequest.getOrderLineItemsDtoList()).getCode()).toList();
 			// call inventory service
-			 boolean result=webClient.get()
-			.uri("http://localhost:8082/api/inventory")
+			 InventoryResponse[] inventoryResponseArray=webClient.get()
+			.uri("http://localhost:8082/api/inventory",uriBuilder->uriBuilder.queryParam( "code", codes).build())
 			.retrieve()
-			.bodyToMono(Boolean.class)
+			.bodyToMono(InventoryResponse[].class)
 			.block();
+			 boolean allProductsInStock=Arrays.stream(inventoryResponseArray)
+			 .allMatch(inventoryResponse->inventoryResponse.isInStock());
 			 
-			 if(result) {
+			 
+			 if(allProductsInStock) {
 					orderRepository.save(order);
 			 }
 			 else {
